@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="With">
+
+<!-- 방만들기 -->
+ <insert id="Room" parameterType="room">
+INSERT INTO ROOM (Id1,RoomId,Starts,Arrive,Street,Price,SelectGender)VALUES
+(#{Id1},#{RoomId}, #{Starts},#{Arrive}, #{Street}, #{Price}, #{SelectGender})
+ </insert>
+
+<!-- 유저 회원가입 -->
+<insert id="UserJoin" parameterType="with">
+insert into member
+(ID,PASSWORD,GENDER,EMAIL,TEL,ADDRESS,PASSUSER)VALUES(#{Id},#{Password},#{Gender},#{Email},#{Tel},#{Address},1)
+</insert>
+
+<!-- 로그인-->
+<select id="Login" parameterType="with" resultType="with">
+select * from member where ID=#{Id} and password=#{Password}
+</select>
+
+<!-- 예약방 ()안에는 쓰겠다. #{}꺼낸다.-->
+<insert id="ReservationRoom" parameterType="room">
+INSERT INTO reservationRoom(Id1,RoomId,Starts,Arrive,Street,Price,SelectGender,Dayday,Times)VALUES
+(#{Id1},#{RoomId}, #{Starts},#{Arrive}, #{Street}, #{Price}, #{SelectGender},#{Dayday},#{Times})
+</insert>
+
+
+
+
+
+</mapper>
