@@ -14,5 +14,6 @@
 <a href="Login">로그인</a><br><br>
 <a href="Logout">로그아웃</a><br><br>
 <a href="UserPage">유저 페이지</a>
+<a href="chatting">채팅</a>
 </body>
 </html>

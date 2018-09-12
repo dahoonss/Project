@@ -10,3 +10,4 @@
 <typeAlias alias="room" type="com.with.project.vo.CreateRoomVO"/>
 </typeAliases>
 </configuration>
+

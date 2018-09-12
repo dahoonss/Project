@@ -114,9 +114,11 @@ public class WithController {
 			return mav;
 		}
 		
-	
-		
-		
+		//채팅방 
+		@RequestMapping("/chatting")
+	    public String viewChattingPage() {
+	        return "chatting";
+	    }
 		
 	
 }
