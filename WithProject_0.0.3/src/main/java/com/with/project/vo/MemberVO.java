@@ -12,9 +12,10 @@ public class MemberVO {
 	private int Point;
 	private int Passuser;
 	private String Certificate; //파일 이름 -> 자격증
-	private int Grade;
 	private String Name;
-	
+	private int Grade;  //한 사람이 주는 평점 분자역할
+	private int GradeCount;//여러사람 인원수 
+	private int Finalgrade; //평점구해는 컬럼
 	private MultipartFile File;
 
 	
@@ -112,6 +113,22 @@ public class MemberVO {
 
 	public void setFile(MultipartFile file) {
 		File = file;
+	}
+
+	public int getGradeCount() {
+		return GradeCount;
+	}
+
+	public void setGradeCount(int gradeCount) {
+		GradeCount = gradeCount;
+	}
+
+	public int getFinalgrade() {
+		return Finalgrade;
+	}
+
+	public void setFinalgrade(int Finalgrade) {
+		this.Finalgrade = Finalgrade;
 	}
 
 	

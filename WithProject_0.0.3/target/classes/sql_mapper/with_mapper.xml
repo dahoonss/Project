@@ -68,4 +68,16 @@ select * from room where roomId=#{roomId}
 <update id="ReservationRoom" parameterType="with">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum},DAYDAY=#{dayDay},TIMES=#{times} where ROOMID = #{roomId}
 </update>
+
+<!-- SelectDriverInfo -->
+<select id="SelectDriverInfo" parameterType="with" resultType="with">
+select * from member where ID=#{Id}
+</select>
+
+<!-- UpdateDriverInfo -->
+<update id="UpdateDriverInfo" parameterType="with">
+update member set grade=#{Grade},gradeCount=#{GradeCount},finalgrade=#{Finalgrade} where ID = #{Id}
+</update>
+
+
 </mapper>

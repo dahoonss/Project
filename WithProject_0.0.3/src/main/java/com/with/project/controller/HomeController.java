@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.service.CreateRoomService;
+import com.with.project.service.GradeService;
 import com.with.project.service.MemberService;
 import com.with.project.vo.MemberVO;
 import com.with.project.vo.RoomVO;
@@ -26,6 +27,9 @@ public class HomeController {
 	@Autowired
 	private MemberService ms;
 	private ModelAndView mav;
+	
+	@Autowired
+	private GradeService gsv;
 
 	@Autowired
 	private CreateRoomService crs;
@@ -263,4 +267,36 @@ public class HomeController {
 		
 	}
 
+	//예약내역보러가기
+	@RequestMapping(value = "/MyReservation", method = RequestMethod.GET)
+	public String MyReservation() {
+		return "MyReservation";
+		
+	}
+	//평점주기 test 페이지
+	@RequestMapping(value = "/Grade", method = RequestMethod.GET)
+	public String Grade() {
+		
+		return "Grade";
+	}
+	
+	//평점주기 test 값 넘기기
+	@RequestMapping(value = "/Gradeform", method = RequestMethod.POST)
+	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session)  {
+		mav = new ModelAndView();
+		
+		String DriverId = "12";
+		System.out.println(Grade);
+		System.out.println(DriverId);
+		mav = gsv.AddGrade(Grade,session,DriverId);
+		
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

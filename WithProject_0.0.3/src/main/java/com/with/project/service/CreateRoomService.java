@@ -15,6 +15,7 @@ public class CreateRoomService {
 	private ModelAndView mav;
 	//private RoomVO roomVO;
 	
+	
 	//방만들기 처음!
 	public ModelAndView CreateRoom(RoomVO roomVO) {
 		mav = new ModelAndView();
@@ -102,6 +103,8 @@ public class CreateRoomService {
 		}
 		return mav;
 	}
+	
+	
 
 	
 }

@@ -40,7 +40,7 @@
 <a href="WithPay">결제하기</a><br><br>
 <a href="RoomList1">동승목록보기</a><br><br>
 <a href="RoomList2">예약목록보기</a><br><br>
-<a href="test">테스트</a>
+<a href="Grade">평점 테스트</a>
 <%-- 로그인 아이디 확인 :<%=id %><br><br>
 <%=request.getAttribute("LoginMember") %><br><br>
 아이디: ${LoginMember.id}<br><br>

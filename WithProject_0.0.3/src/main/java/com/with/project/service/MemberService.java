@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.with.project.dao.GradeDAO;
 import com.with.project.dao.MemberDAO;
 import com.with.project.vo.MemberVO;
 
@@ -20,6 +21,7 @@ public class MemberService {
 	private MemberDAO memberDAO;
 	private ModelAndView mav;
 	private MemberVO memberVO;
+	private GradeDAO gradeDAO;
 
 	@Autowired
 	private HttpSession session;
@@ -135,5 +137,7 @@ public class MemberService {
 		}
 		
 	}
+
+	
 
 }
