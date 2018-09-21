@@ -2,6 +2,7 @@ package com.with.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.with.project.service.CreateRoomService;
 import com.with.project.service.GradeService;
 import com.with.project.service.MemberService;
+import com.with.project.service.ReservationService;
 import com.with.project.vo.MemberVO;
 import com.with.project.vo.RoomVO;
 
@@ -30,6 +32,9 @@ public class HomeController {
 	
 	@Autowired
 	private GradeService gsv;
+	
+	@Autowired
+	private ReservationService rsv;
 
 	@Autowired
 	private CreateRoomService crs;
@@ -252,12 +257,15 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/ReservationRoom", method = RequestMethod.POST)
-	public ModelAndView ReservationRoom(@ModelAttribute RoomVO roomVO, @RequestParam("gender") String gender,@RequestParam("dayDay") String dayDay, @RequestParam("times") String times) {
+	public ModelAndView ReservationRoom(@ModelAttribute RoomVO roomVO, @RequestParam("gender") String gender,
+			@RequestParam("dayDay") String dayDay, 
+			@RequestParam("times") String times) {
 		mav = new ModelAndView();
 		/*System.out.println(gender);
 		System.out.println(dayDay);
 		System.out.println(times);
 		*/
+		
 		roomVO.setOpGender(gender);
 		roomVO.setDayDay(dayDay);
 		roomVO.setTimes(times);
@@ -273,6 +281,7 @@ public class HomeController {
 		return "MyReservation";
 		
 	}
+
 	//평점주기 test 페이지
 	@RequestMapping(value = "/Grade", method = RequestMethod.GET)
 	public String Grade() {
@@ -292,8 +301,6 @@ public class HomeController {
 		
 		return mav;
 	}
-	
-	
 	
 	
 	

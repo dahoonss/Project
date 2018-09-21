@@ -33,6 +33,7 @@ select * from member where ID=#{Id}
 <update id="UserUpdate" parameterType="with">
 UPDATE member SET email=#{Email},TEL=#{Tel},Address=#{Address},NAME=#{Name} WHERE id=#{Id}
 </update>
+
 <!-- 운전자 정보 변경 -->
 <update id="DriverUpdate" parameterType="with">
 UPDATE member SET email=#{Email},TEL=#{Tel},address=#{Address},certificate=#{Certificate},NAME=#{Name}  WHERE id=#{Id}
@@ -42,6 +43,7 @@ UPDATE member SET email=#{Email},TEL=#{Tel},address=#{Address},certificate=#{Cer
 <select id="idOverlap" parameterType="with" resultType="with">
 SELECT * FROM MEMBER WHERE id=#{id}
 </select>
+
 <!-- max(RoomId) 찾기 -->
 <select id="RoomId" resultType="String">
 select max(ROOMID) AS ROOMID from ROOM
@@ -57,13 +59,16 @@ insert into ROOM(roomId,RStart,REnd,PreTime,PreDistance,PreMoney,Rid1) values(#{
 SELECT * FROM ROOM WHERE Roomid=#{insertRoomId}
 </select> -->
 <!-- CreateRoom 방 옵션, 최대인원 추가 -->
+
 <update id="CreateRealRoom" parameterType="with">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum} where ROOMID = #{roomId}
 </update>
+
 <!-- SelectRoom -->
 <select id="SelectRoom" parameterType="room" resultType="room">
 select * from room where roomId=#{roomId}
 </select>
+
 <!-- ReservationRoom -->
 <update id="ReservationRoom" parameterType="with">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum},DAYDAY=#{dayDay},TIMES=#{times} where ROOMID = #{roomId}
@@ -78,6 +83,11 @@ select * from member where ID=#{Id}
 <update id="UpdateDriverInfo" parameterType="with">
 update member set grade=#{Grade},gradeCount=#{GradeCount},finalgrade=#{Finalgrade} where ID = #{Id}
 </update>
+
+<select id="roomList" parameterType="room" resultType="room">
+SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
 
 
 </mapper>

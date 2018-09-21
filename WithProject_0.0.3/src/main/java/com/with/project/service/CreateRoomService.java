@@ -1,10 +1,13 @@
 package com.with.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.dao.CreateRoomDAO;
+import com.with.project.dao.ReservationDAO;
 import com.with.project.vo.RoomVO;
 
 @Service
@@ -13,6 +16,7 @@ public class CreateRoomService {
 	@Autowired
 	private CreateRoomDAO CreateRoomDAO;
 	private ModelAndView mav;
+	private ReservationDAO rsvDAO;
 	//private RoomVO roomVO;
 	
 	
@@ -101,6 +105,11 @@ public class CreateRoomService {
 			mav.addObject("Room", roomVO2);
 			mav.setViewName("Reservation");
 		}
+		List<RoomVO> roomlist = rsvDAO.roomList(roomVO);
+		mav.addObject("reservation", roomlist);
+		mav.setViewName("MyReservation");
+	
+		
 		return mav;
 	}
 	

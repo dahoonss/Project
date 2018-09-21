@@ -48,10 +48,12 @@
 (예상금액 / 최대인원 한 값)예상금액 : ${Room.preMoney }원<br>
 예상시간 : ${Room.preTime }<br><br>
 예약 날짜 / 시간 : ${Room.dayDay } / ${Room.times }<br>
-<a href="ChattingRoom">채팅방 입장</a><br>
+<a href="ChattingRoom">채팅방 입장</a><br>+
 결제 미완료 / 동승중<br>
-예약 및 결제/ 예약 취소<br>
-<a href="home">방 나가기</a>
+예약 및 결제/ 예약 취소<br><br>
+<a href="home">방 나가기</a><br><br>
+
+<a href="MyReservation?roomId=${Room.roomId}">예약내역</a>
 
 <!--  
 <c:if test="${LoginMember.passuser == 2}">

@@ -1,6 +1,8 @@
 package com.with.project.service;
 
 
+import java.text.DecimalFormat;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +65,15 @@ public class GradeService {
 
 	public ModelAndView AddGrade(String grade, HttpSession session, String driverId) {
 		mav = new ModelAndView();
+		
 		System.out.println("gradeDAO전");
 		MemberVO Driver = gradeDAO.SelectDriverInfo(driverId);
 		System.out.println(Driver);
-		int sum = Driver.getGrade();
-		int count = Driver.getGradeCount();
-		int ffinal = 0;
+		double sum = Driver.getGrade();
+		double count = Driver.getGradeCount();
+		double ffinal = 0.0;
 		
+		/*double ble =Double.parseDouble(String.format("%.1f", ffinal));*/
 		sum = sum+Integer.parseInt(grade);
 		count+=1;
 		ffinal = sum/count;
