@@ -63,25 +63,48 @@ public class GradeService {
 
 
 
-	public ModelAndView AddGrade(String grade, HttpSession session, String driverId) {
+	public ModelAndView AddGrade(String grade, HttpSession session, String Id) {
 		mav = new ModelAndView();
 		
 		System.out.println("gradeDAO전");
-		MemberVO Driver = gradeDAO.SelectDriverInfo(driverId);
+		MemberVO Driver = gradeDAO.SelectDriverInfo(Id);
 		System.out.println(Driver);
+		int passUser = Driver.getPassuser();
 		double sum = Driver.getGrade();
 		double count = Driver.getGradeCount();
-		double ffinal = 0.0;
+		double ffinal = Driver.getFinalgrade();
+		double ffinal2 = Double.parseDouble(String.format("%.1f", ffinal));
+		
+		
+	
+
+			//1.
+		//내가 결제한 목록 페이지에서 RoomId링크걸기(상세보기)
+		//상세보기는 endRoom에 값들이다.
+		//이값들중 DrviverId 에 링크를 걸어서 평점을 준다.
+		
+			
+		
+		//2.
+			// endroom에 있는 driverId를 꺼내온다.
+			// 기사 아이디 member table
+		// select * from member where id = driverId;
+			// driverId를 가지고 member table에 객체를 가져온다.
+		//평점
+			// 연산을하고 결과를 넣는다 (다시 인설트)
+		
+	
+		
 		
 		/*double ble =Double.parseDouble(String.format("%.1f", ffinal));*/
 		sum = sum+Integer.parseInt(grade);
 		count+=1;
-		ffinal = sum/count;
+		ffinal2 = sum/count;
 		
 		Driver.setId(driverId);
 		Driver.setGrade(sum);
 		Driver.setGradeCount(count);
-		Driver.setFinalgrade(ffinal);
+		Driver.setFinalgrade(ffinal2);
 		
 		gradeDAO.UpdateDriverInfo(Driver);
 		mav.addObject("gogo",Driver);

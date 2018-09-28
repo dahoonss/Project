@@ -21,18 +21,20 @@
 			<td>조회수</td>
 
 			
+			<c:forEach items="${Reservationlist}" var="Reservationlist">
 				<tr>
-					<td>${reservation.roomId}</td>
-					<td>${reservation.rStart}</td>
-					<td>${reservation.rEnd}</td>
-					<td>${reservation.preTime}</td>
-					<td>${reservation.preDistance}</td>
-					<td>${reservation.preMoney}</td>
-					<td>${reservation.opGender}</td>
-					<td>${reservation.dayDay}</td>
-					<td>${reservation.times}</td>
+					<td>${Reservationlist.roomId}</td>
+					<td>${Reservationlist.rStart}</td>
+					<td>${Reservationlist.rEnd}</td>
+					<td>${Reservationlist.preTime}</td>
+					<td>${Reservationlist.preDistance}</td>
+					<td>${Reservationlist.preMoney}</td>
+					<td>${Reservationlist.opGender}</td>
+					<td>${Reservationlist.dayDay}</td>
+					<td>${Reservationlist.times}</td>
 					
-			
+			</tr>
+			</c:forEach>
 	</table>
 </body>
 </html>

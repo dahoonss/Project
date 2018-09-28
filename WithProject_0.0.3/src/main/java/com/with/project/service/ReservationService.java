@@ -20,6 +20,20 @@ public class ReservationService {
 	
 	
 	
+	public ModelAndView ReservationList() {
+		mav = new ModelAndView();
+		List<RoomVO> Reservationlist= rsvDAO.ReservationList();
+		
+		mav.addObject("Reservationlist",Reservationlist);
+		mav.setViewName("MyReservation");
+		
+		
+		
+		return mav;
+	}
+	
+	
+	
 	
 	
 

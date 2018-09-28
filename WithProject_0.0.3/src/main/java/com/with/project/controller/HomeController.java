@@ -2,7 +2,7 @@ package com.with.project.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -291,13 +291,25 @@ public class HomeController {
 	
 	//평점주기 test 값 넘기기
 	@RequestMapping(value = "/Gradeform", method = RequestMethod.POST)
-	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session)  {
+	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session,@RequestParam("Id")String Id)  {
 		mav = new ModelAndView();
 		
-		String DriverId = "12";
+		/*String DriverId = "12";*/
+		
 		System.out.println(Grade);
-		System.out.println(DriverId);
-		mav = gsv.AddGrade(Grade,session,DriverId);
+		System.out.println(Id);
+		mav = gsv.AddGrade(Grade,session,Id);
+		
+		return mav;
+	}
+	
+	//예약내역보기
+	@RequestMapping(value = "/ReservationList", method = RequestMethod.GET)
+	public ModelAndView ReservationList() {
+		
+		mav = new ModelAndView();
+		mav = rsv.ReservationList();
+		
 		
 		return mav;
 	}

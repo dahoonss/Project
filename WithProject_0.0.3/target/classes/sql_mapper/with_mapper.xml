@@ -84,9 +84,15 @@ select * from member where ID=#{Id}
 update member set grade=#{Grade},gradeCount=#{GradeCount},finalgrade=#{Finalgrade} where ID = #{Id}
 </update>
 
-<select id="roomList" parameterType="room" resultType="room">
-SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+<select id="ReservationList" resultType="with">
+SELECT * FROM ROOM ORDER BY Roomid
 </select>
+
+
+
+
+
+
 
 
 

@@ -15,9 +15,11 @@ public class ReservationDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public List<RoomVO> roomList(RoomVO roomVO) {
-		return sqlSession.selectList("With.roomList",roomVO);
+	public List<RoomVO> ReservationList() {
+		return sqlSession.selectList("With.ReservationList");
 	}
+
+	
 
 	
 	
