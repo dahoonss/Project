@@ -11,6 +11,9 @@
  <link href="resources/boot/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/boot/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="resources/boot/css/style.css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
 #map_div{
 	float:right;
@@ -353,7 +356,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="RoomList">방목록보기</a></li>
-            <li><a href="#">예약가능한 방목록보기</a></li>
+            <li><a href="RoomList1">예약가능한 방목록보기</a></li>
             
           </ul>
         </li>
@@ -362,6 +365,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     </div>
   </div>
 </nav>
+
 
 
 <br>
@@ -395,7 +399,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
        
     
     
-<p>    <button class="btn btn-info" onclick="location:href='RoomList'" ><i class="fa fa-search w3-margin-center"></i> 방목록보기 </button> </p>
+
    
   </div>
 </nav>

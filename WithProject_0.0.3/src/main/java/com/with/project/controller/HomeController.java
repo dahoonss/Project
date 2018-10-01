@@ -291,14 +291,14 @@ public class HomeController {
 	
 	//평점주기 test 값 넘기기
 	@RequestMapping(value = "/Gradeform", method = RequestMethod.POST)
-	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session,@RequestParam("Id")String Id)  {
+	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session)  {
 		mav = new ModelAndView();
 		
-		/*String DriverId = "12";*/
+		String DriverId = "12";
 		
 		System.out.println(Grade);
-		System.out.println(Id);
-		mav = gsv.AddGrade(Grade,session,Id);
+		System.out.println(DriverId);
+		mav = gsv.AddGrade(Grade,session,DriverId);
 		
 		return mav;
 	}

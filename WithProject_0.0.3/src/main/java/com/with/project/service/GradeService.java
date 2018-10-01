@@ -63,13 +63,13 @@ public class GradeService {
 
 
 
-	public ModelAndView AddGrade(String grade, HttpSession session, String Id) {
+	public ModelAndView AddGrade(String grade, HttpSession session,String DriverId) {
 		mav = new ModelAndView();
 		
 		System.out.println("gradeDAO전");
-		MemberVO Driver = gradeDAO.SelectDriverInfo(Id);
+		MemberVO Driver = gradeDAO.SelectDriverInfo(DriverId);
 		System.out.println(Driver);
-		int passUser = Driver.getPassuser();
+		
 		double sum = Driver.getGrade();
 		double count = Driver.getGradeCount();
 		double ffinal = Driver.getFinalgrade();
@@ -101,7 +101,7 @@ public class GradeService {
 		count+=1;
 		ffinal2 = sum/count;
 		
-		Driver.setId(driverId);
+		Driver.setId(DriverId);
 		Driver.setGrade(sum);
 		Driver.setGradeCount(count);
 		Driver.setFinalgrade(ffinal2);

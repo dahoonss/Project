@@ -10,42 +10,42 @@
  -->
 
 <!-- 기사 회원가입 -->
-<insert id="DriverJoin" parameterType="with">
+<insert id="DriverJoin" parameterType="member">
 insert into member
 (ID, PASSWORD, GENDER, EMAIL, TEL, ADDRESS,CERTIFICATE,PASSUSER,NAME)
 values(#{Id},#{Password},#{Gender},#{Email},#{Tel},#{Address},#{Certificate},2,#{Name})
 </insert>
 
 <!-- 유저회원가입 -->
-<insert id="UserJoin" parameterType="with">
+<insert id="UserJoin" parameterType="member">
 insert into member
 (ID,PASSWORD,GENDER,EMAIL,TEL,ADDRESS,PASSUSER,NAME)
 VALUES(#{Id},#{Password},#{Gender},#{Email},#{Tel},#{Address},1,#{Name})
 </insert>
 
 <!-- 로그인 -->
-<select id="Login" parameterType="with" resultType="with">
+<select id="Login" parameterType="member" resultType="member">
 select * from member where ID=#{Id} and password=#{Password}
 </select>
 
 <!--Main  -->
-<select id="Main" parameterType="with" resultType="with">
+<select id="Main" parameterType="member" resultType="member">
 select * from member where ID=#{Id}
 </select>
 
 <!-- 유저정보 변경 -->
-<update id="UserUpdate" parameterType="with">
+<update id="UserUpdate" parameterType="member">
 UPDATE member SET email=#{Email},TEL=#{Tel},Address=#{Address},NAME=#{Name} WHERE id=#{Id}
 </update>
 
 <!-- 운전자 정보 변경 -->
-<update id="DriverUpdate" parameterType="with">
+<update id="DriverUpdate" parameterType="member">
 UPDATE member SET email=#{Email},TEL=#{Tel},address=#{Address},certificate=#{Certificate},NAME=#{Name}  WHERE id=#{Id}
 </update>
 
 
 <!-- 아이디 중복확인 -->
-<select id="idOverlap" parameterType="with" resultType="with">
+<select id="idOverlap" parameterType="member" resultType="member">
 SELECT * FROM MEMBER WHERE id=#{id}
 </select>
 
@@ -65,12 +65,12 @@ SELECT * FROM ROOM WHERE Roomid=#{insertRoomId}
 </select> -->
 
 <!-- CreateRoom 방 옵션, 최대인원 추가 -->
-<update id="CreateRealRoom" parameterType="with">
+<update id="CreateRealRoom" parameterType="member">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum} where ROOMID = #{roomId}
 </update>
 
 <!-- 예상금액 따로 넣어주기 -->
-<update id="CreateRealRoom2" parameterType="with">
+<update id="CreateRealRoom2" parameterType="member">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum},FinalMoney=#{finalMoney} where ROOMID = #{roomId}
 </update>
 
@@ -80,13 +80,18 @@ select * from room where roomId=#{roomId}
 </select>
 
 <!-- ReservationRoom -->
-<update id="ReservationRoom" parameterType="with">
+<update id="ReservationRoom" parameterType="member">
 update room set OPGENDER=#{opGender},MAXIMUM=#{maximum},DAYDAY=#{dayDay},TIMES=#{times} where ROOMID = #{roomId}
 </update>
 
 <!--RoomList  -->
 <select id="RoomList" parameterType="room" resultType="room">
-SELECT * FROM ROOM ORDER BY ROOMID
+select * from room where DAYDAY is null ORDER BY ROOMID
+</select>
+
+<!--RoomList2  -->
+<select id="RoomList2" parameterType="room" resultType="room">
+select * from room where DAYDAY is not null ORDER BY ROOMID
 </select>
 
 <!-- Id1 -->
@@ -138,5 +143,120 @@ UPDATE ROOM SET RID4=#{rId4} WHERE roomId = #{roomId}
 <select id="SelectMax" parameterType="room" resultType="String">
 SELECT maximum FROM ROOM WHERE ROOMID = #{roomId}
 </select>
+
+<!-- SelectOut -->
+<select id="SelectOut" parameterType="room" resultType="room">
+SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
+<!-- RoomDel -->
+<delete id="RoomDel" parameterType="room">
+DELETE FROM ROOM WHERE ROOMID= #{roomId}
+</delete>
+
+<!-- RoomOutRid2 -->
+<update id="RoomOutRid2" parameterType="room">
+UPDATE ROOM SET RID2=null WHERE roomId = #{roomId}
+</update>
+
+<!-- RoomOutRid3 -->
+<update id="RoomOutRid3" parameterType="room">
+UPDATE ROOM SET RID3=null WHERE roomId = #{roomId}
+</update>
+
+<!-- RoomOutRid4 -->
+<update id="RoomOutRid4" parameterType="room">
+UPDATE ROOM SET RID4=null WHERE roomId = #{roomId}
+</update>
+
+<!-- MemberGender -->
+<select id="MemberGender" parameterType="member" resultType="member">
+select * from member where ID=#{Id}
+</select>
+
+<!-- RoomGender -->
+<select id="RoomGender" parameterType="room" resultType="room">
+SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
+<!-- SelectDriverId -->
+<select id="SelectDriverId" parameterType="room" resultType="String">
+SELECT DRIVERID FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
+<!-- UpdateDriver -->
+<update id="UpdateDriver" parameterType="room">
+UPDATE ROOM SET driverId=#{driverId} WHERE roomId = #{roomId}
+</update>
+
+<!-- RoomOutDriver -->
+<update id="RoomOutDriver" parameterType="room">
+UPDATE ROOM SET driverId=null WHERE roomId = #{roomId}
+</update>
+
+<!--DriverInfo  -->
+<select id="DriverInfo" parameterType="member" resultType="member">
+SELECT * FROM MEMBER WHERE ID = #{Id}
+</select>
+
+<!-- UserPoint 유저 포인트찾기 PAY 클래스-->
+<select id="UserPoint" parameterType="member" resultType="member">
+SELECT * FROM MEMBER WHERE ID = #{Id}
+</select>
+
+<!-- UpdatePoint -->
+<update id="UpdatePoint" parameterType="member">
+UPDATE MEMBER SET POINT=#{Point} WHERE ID = #{Id}
+</update>
+
+<!-- PayAfterRoom -->
+<select id="PayAfterRoom" parameterType="room" resultType="room">
+SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
+<!-- InsertId -->
+<insert id="InsertId" parameterType="pay">
+insert into pay values(#{roomId},#{id},1)
+</insert>
+
+<!-- MemberPointUpdate -->
+<update id="MemberPointUpdate" parameterType="member">
+UPDATE MEMBER SET POINT=#{Point} WHERE ID = #{Id}
+</update>
+
+<!-- SelectPayTable -->
+<select id="SelectPayTable" parameterType="pay" resultType="pay">
+SELECT * FROM PAY WHERE ROOMID = #{roomId} and id = #{id}
+</select>
+
+<!-- DelLine -->
+<delete id="DelLine" parameterType="room">
+DELETE FROM PAY WHERE ROOMID= #{roomId} AND ID = #{id}
+</delete>
+
+<!-- FinalMoneyBring -->
+<select id="FinalMoneyBring" parameterType="room" resultType="room">
+SELECT * FROM ROOM WHERE ROOMID = #{roomId}
+</select>
+
+<!-- SelectOkChash -->
+<select id="SelectOkChash" parameterType="pay" resultType="String">
+SELECT OKCASH FROM PAY WHERE ROOMID = #{roomId} and id = #{id}
+</select>
+
+<!-- PayList -->
+<select id="PayList" parameterType="pay" resultType="pay">
+select * from pay where roomId = #{roomId}
+</select>
+
+<!-- InsertDrvierPay -->
+<insert id="InsertDrvierPay" parameterType="pay">
+insert into pay values(#{roomId},#{id},2)
+</insert>
+
+<!-- EndRoomInsert -->
+<insert id="EndRoomInsert" parameterType="endRoom">
+insert into ENDROOM values(#{eroomId},#{erStart},#{erEnd},#{epreTime},#{epreDistance},#{epreMoney},#{eopGender},#{erId1},#{erId2},#{erId3},#{erId4},#{edayDay},#{etimes},#{emaximum},#{edriverId},#{efinalMoney})
+</insert>
 
 </mapper>

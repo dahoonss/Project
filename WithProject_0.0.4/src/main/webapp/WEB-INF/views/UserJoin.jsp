@@ -78,7 +78,7 @@ function idOverlap() {
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="RoomList">방목록보기</a></li>
-            <li><a href="#">예약가능한 방목록보기</a></li>
+            <li><a href="RoomList1">예약가능한 방목록보기</a></li>
             
           </ul>
         </li>

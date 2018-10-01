@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet" href="/SRC2/popupca/style.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -18,7 +15,6 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="/SRC2/popupca/calendar.js"></script>
-</head>
 <style>
 
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
@@ -30,7 +26,6 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     background-image: url('/w3images/profile_girl.jpg');
     min-height: 100%;
 }
-
 .picker-container {
 position: absolute;
 z-index: 99;
@@ -156,13 +151,10 @@ margin-bottom: 0;
 }
 
 </style>
-<html>
-<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -209,84 +201,34 @@ margin-bottom: 0;
 </nav>
 
 
+ <br>
+ <br>
+ <br>
 
-  <br>
-  <br>
-  <br>
-    <form action="CreateRealRoom?roomId=${Room.roomId}" method="post">
-      <div class="w3-half w3-margin-bottom" style="margin-left:25%;" >
-        <ul class="w3-ul w3-center w3-card w3-hover-shadow">
-          <li class="w3-dark-grey w3-xlarge w3-padding-32">회원님이 방이 만들어졌습니다</li>
-          <li class="w3-padding-16"><strong>회원아이디:</strong><%=session.getAttribute("id") %></li>
-          <li class="w3-padding-16"><strong>출발지 확인 :</strong>${Room.rStart}</li>
-          <li class="w3-padding-16"> <strong>도착지 확인 :</strong>${Room.rEnd}</li>
-          <li class="w3-padding-16"> <strong>예상 거리 :</strong>${Room.preDistance}</li>
-          <li class="w3-padding-16"> <strong>(예상금액 / 최대인원 한 값)예상금액 :</strong> ${Room.finalMoney}원</li>
-          <li class="w3-padding-16"> <strong>예상 시간 :</strong>${Room.preTime}</li>
-          <li class="w3-padding-16"><strong>성별 옵션:</strong> ${Room.opGender }<br>
-<%int num = 0; %>
-<c:if test="${Room.rId1 != null}">
-<% num += 1; %>
-</c:if>
-<c:if test="${Room.rId2 != null }">
-<% num +=1; %>
-</c:if>
-<c:if test="${Room.rId3 != null }">
-<% num +=1; %>
-</c:if>
-<c:if test="${Room.rId4 != null }">
-<% num +=1; %>
-</c:if></li>
-
-          <li class="w3-padding-16"> <strong>인원 수: <%=num %> / ${Room.maximum}</strong></li>
-          <li class="w3-padding-16"> <strong>입장한아이디:</strong><c:if test="${Room.rId1 != null}">
-현재 입장중인 ID: ${Room.rId1}<br>
-</c:if>
-<c:if test="${Room.rId2 != null}">
-현재 입장중인 ID: ${Room.rId2}<br>
-</c:if>
-<c:if test="${Room.rId3 != null}">
-현재 입장중인 ID: ${Room.rId3}<br>
-</c:if>
-<c:if test="${Room.rId4 != null}">
-현재 입장중인 ID: ${Room.rId4}<br>
-</c:if>
-          </li>
-          <li class="w3-padding-16"> <strong>기사입장유무:</strong>
-<c:if test="${Room.driverId == null}">
-기사 ID : 현재 입장중인 기사가 없습니다.<br>
-</c:if>
-<c:if test="${Room.driverId != null}">
-기사 ID : <a href="DriverInfo?Id=${Room.driverId}">${Room.driverId}</a><br>
-</c:if>
-
-          </li>
-
-
-     
+    <form action="PayPro" method="post">
+    <input type="hidden" value="${roomId}" name="roomId">
+    
+      <div class="w3-half w3-margin-bottom" style="margin-left:20%;">
+        <ul class="w3-ul w3-center w3-card w3-hover-shadow" style="margin-left:25%;">
+          <li class="w3-dark-grey w3-xlarge w3-padding-32">결제페이지</li>
+          
+          <li class="w3-padding-16"> <strong>예상 금액 :</strong>${finalMoney}</li>
+          <li class="w3-padding-16"> <strong>보유포인트:</strong>${member.point}</li>
+  
           <li class="w3-light-grey w3-padding-24">
-          <c:if test="${pay.okCash == null}">
-        <strong>결제 미완료</strong>    
-            <input type="button" class="w3-button w3-white w3-padding-large w3-hover-black" onclick="location.href='ChattingRoom'" value="채팅방입장">
-            
-            
-             <input type="button" class="w3-button w3-white w3-padding-large w3-hover-black" onclick="location.href='pay?finalMoney=${Room.finalMoney}&roomId=${Room.roomId}'" value="결제">
-             </c:if>
-          <c:if test="${pay.okCash == '1'}">
-동승중
-<input type="button" class="w3-button w3-white w3-padding-large w3-hover-black" onclick="location.href='payCancel?roomId=${Room.roomId}'" value="결제취소">
-</c:if>
-
-<c:if test="${pay.okCash == null}">
- <input type="button" class="w3-button w3-white w3-padding-large w3-hover-black" onclick="location.href='RoomOut?roomId=${Room.roomId}'" value="방나가기">
- </c:if>
- 
-<c:if test="${member.passuser == 2}">
-<input type="button" class="w3-button w3-white w3-padding-large w3-hover-black" onclick="location.href='EndDriver?roomId=${Room.roomId}'" value="운행완료">
-</c:if>
-          </li>
-        </ul>
-      </div>
+           <input type="hidden" value="${member.point}" name="Point">
+           <input type="hidden" value="${finalMoney}" name="finalMoney">
+            <input type="submit" class="w3-button w3-white w3-padding-large w3-hover-black" value="결제하기">       
+            </li>
+       
 </form>
+<form action="AddPoint" method="post">
+<input type="hidden" value="${roomId}" name="roomId">
+<input type="hidden" value="${finalMoney}" name="finalMoney">
+<input type="hidden" value="${member.point}" name="Point">
+ <li class="w3-light-grey w3-padding-24"><input type="submit" class="w3-button w3-white w3-padding-large w3-hover-black" value="포인트충전하기"></li>    
+</form>
+ </ul>
+      </div>
 </body>
 </html>

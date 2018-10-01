@@ -83,7 +83,7 @@ margin-left:55%;
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="RoomList">방목록보기</a></li>
-            <li><a href="#">예약가능한 방목록보기</a></li>
+            <li><a href="RoomList1">예약가능한 방목록보기</a></li>
             
           </ul>
         </li>
@@ -109,7 +109,7 @@ margin-left:55%;
         <h1 class="w3-xlarge">With 승객용</h1>
         <hr class="w3-opacity">
         
-        <p><button class="w3-button w3-block w3-green w3-round" onclick="location.href='UserStart'">시작하기</button></p>
+        <p><button class="w3-button w3-block w3-green w3-round" onclick="location.href='UserStart'" style="height:85px;">시작하기</button></p>
       </div>
 
     </div>
@@ -118,7 +118,8 @@ margin-left:55%;
         <h1 class="w3-xlarge">With 기사용</h1>
         <hr class="w3-opacity">
         
-        <p><button class="w3-button w3-block w3-green w3-round" onclick="location.href='DriverStart'">시작하기 </button></p>
+        <p><button class="w3-button w3-block w3-green w3-round" onclick="location.href='RoomList'">바로시작하기 </button></p>
+         <p><button class="w3-button w3-block w3-green w3-round" onclick="location.href='RoomList1'">예약시작하기 </button></p>
       </div>
 
     </div>

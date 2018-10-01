@@ -381,7 +381,7 @@ margin-bottom: 0;
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="RoomList">방목록보기</a></li>
-            <li><a href="#">예약가능한 방목록보기</a></li>
+            <li><a href="RoomList1">예약가능한 방목록보기</a></li>
             
           </ul>
         </li>
@@ -395,8 +395,7 @@ margin-bottom: 0;
  <br>
  <br>
  <br>
-    
-    <div class="w3-row-padding" style="margin:0 -16px">
+
     <form action="CreateRealRoom?roomId=${Room.roomId}" method="post">
       <div class="w3-half w3-margin-bottom">
         <ul class="w3-ul w3-center w3-card w3-hover-shadow">
@@ -428,7 +427,7 @@ margin-bottom: 0;
       </div>
 </form>
 
-<form action="CreateRealRoom?roomId=${Room.roomId}" method="post">
+<form action="ReservationRoom?roomId=${Room.roomId}" method="post">
       <div class="w3-half">
       
         <ul class="w3-ul w3-center w3-card w3-hover-shadow">

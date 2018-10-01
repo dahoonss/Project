@@ -2,6 +2,7 @@ package com.with.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.service.CreateRoomService;
 import com.with.project.service.MemberService;
+import com.with.project.service.PayService;
 import com.with.project.vo.MemberVO;
+import com.with.project.vo.PayVO;
 import com.with.project.vo.RoomVO;
+import com.with.project.vo.endRoomVO;
 
 @Controller
 public class HomeController {
@@ -29,6 +33,9 @@ public class HomeController {
 
 	@Autowired
 	private CreateRoomService crs;
+	
+	@Autowired
+	private PayService ps;
 
 	@Autowired
 	private HttpSession session;
@@ -214,9 +221,10 @@ public class HomeController {
 
 	// CreateRoom 방 만들기
 	@RequestMapping(value = "/CreateRoom", method = RequestMethod.GET)
-	public ModelAndView CreateRoom(@ModelAttribute RoomVO roomVO, HttpSession session) {
+	public ModelAndView CreateRoom(@ModelAttribute RoomVO roomVO, HttpSession session,HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
-
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		// 전부 찍힘
 		/*
 		 * System.out.println(roomVO.getRStart()); System.out.println(roomVO.getREnd());
@@ -227,6 +235,20 @@ public class HomeController {
 		// 테이블에 있는거 가져와서 max(넘버값) +1 시켜서
 
 		String id = (String) session.getAttribute("id");
+		if(id==null) {
+			out.println("<script>");
+			out.println("alert('로그인을 해주세용!');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}
+		if(roomVO.getPreDistance().equals("undefined")) {
+			out.println("<script>");
+			out.println("alert('경로를 먼저 검색해주세요!');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}
 		// 방 초기에 만들때는 Rid1에 방장의 아이디 값이 들어간다.
 		roomVO.setrId1(id);
 		mav = crs.CreateRoom(roomVO);
@@ -266,6 +288,17 @@ public class HomeController {
 		return mav;
 		
 	}
+	//예약룸 RoomList1 가즈아!
+	@RequestMapping(value = "/RoomList1", method = RequestMethod.GET)
+	public ModelAndView RoomList1() {
+		mav = new ModelAndView();
+		
+		mav = crs.RoomList2();
+		
+		return mav;
+		
+	}
+	
 	//RoomList 방목록 불러오기
 	@RequestMapping(value = "/RoomList", method = RequestMethod.GET)
 	public ModelAndView RoomList() {
@@ -278,12 +311,168 @@ public class HomeController {
 	}
 	//RoomInfo 방 세부정보
 	@RequestMapping(value = "/RoomInfo", method = RequestMethod.GET)
-	public ModelAndView RoomInfo(@ModelAttribute RoomVO roomVO, HttpSession session,HttpServletResponse response) throws IOException {
+	public ModelAndView RoomInfo(@ModelAttribute RoomVO roomVO, HttpSession session,HttpServletResponse response,PayVO payVO) throws IOException {
 		mav = new ModelAndView();
-		
-		mav = crs.RoomInfo(roomVO, session,response);
+		mav = crs.RoomInfo(roomVO, session,response,payVO);
 		
 		return mav;
 		
 	}
+	//RoomOut 방나가기
+	@RequestMapping(value = "/RoomOut", method = RequestMethod.GET)
+	public ModelAndView RoomOut(@ModelAttribute RoomVO roomVO,HttpSession session, HttpServletResponse response) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = crs.RoomOut(roomVO, session,response);
+		
+		return mav;
+	}
+	//DriverInfo 방에서 기사의 상세정보 보기 
+	@RequestMapping(value = "/DriverInfo", method = RequestMethod.GET)
+	public ModelAndView DriverInfo(@RequestParam("Id") String Id, HttpServletResponse response) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = crs.RoomDriverInfo(Id);
+		
+		return mav;
+	}
+	//pay 결제페이지로
+	@RequestMapping(value = "/pay", method = RequestMethod.GET)
+	public ModelAndView pay(@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId, HttpServletResponse response,HttpSession session) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = ps.PayClick(finalMoney,roomId,response,session);
+		
+		return mav;
+	}
+	//AddPoint 충전패이지로
+	@RequestMapping(value = "/AddPoint", method = RequestMethod.POST)
+	public ModelAndView AddPoint(@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId){
+	
+		mav = new ModelAndView();
+		
+		mav = ps.AddPoint(finalMoney,roomId);
+		
+		return mav;
+	}
+	//AddPointPro 진짜 충전
+	@RequestMapping(value = "/AddPointPro", method = RequestMethod.POST)
+	public ModelAndView AddPointPro(@RequestParam("Point") String Point,HttpSession session,@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId)  {
+		mav = new ModelAndView();
+		//System.out.println(Point);
+		mav = ps.AddPointPro(Point,session,roomId,finalMoney);
+		
+		return mav;
+	}
+	//PayPro 진짜결제
+	@RequestMapping(value = "/PayPro", method = RequestMethod.POST)
+	public ModelAndView PayPro(@ModelAttribute MemberVO memberVO,HttpSession session,@RequestParam("finalMoney") String finalMoney,@ModelAttribute PayVO payVO,HttpServletResponse response) throws IOException  {
+		mav = new ModelAndView();
+		/*System.out.println(memberVO.getPoint());
+		System.out.println(payVO.getRoomId());
+		System.out.println(finalMoney);*/
+		mav = ps.PayPro(session,payVO,finalMoney,response,memberVO);
+		
+		return mav;
+	}
+	
+	//payCancel 결제취소
+	@RequestMapping(value = "/payCancel", method = RequestMethod.GET)
+	public ModelAndView payCancel(HttpSession session, @ModelAttribute PayVO payVO) {
+		mav = new ModelAndView();
+		mav = ps.payCancel(session,payVO);
+		return mav;
+	}
+	
+	//예약 및 결제 Rpay
+	@RequestMapping(value = "/Rpay", method = RequestMethod.GET)
+	public ModelAndView Rpay(@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId, HttpServletResponse response,HttpSession session) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = ps.PayClick2(finalMoney,roomId,response,session);
+		
+		return mav;
+	}
+	//PayPro2
+	@RequestMapping(value = "/PayPro2", method = RequestMethod.POST)
+	public ModelAndView PayPro2(@ModelAttribute MemberVO memberVO,HttpSession session,@RequestParam("finalMoney") String finalMoney,@ModelAttribute PayVO payVO,HttpServletResponse response) throws IOException  {
+		mav = new ModelAndView();
+		/*System.out.println(memberVO.getPoint());
+		System.out.println(payVO.getRoomId());
+		System.out.println(finalMoney);*/
+		mav = ps.PayPro2(session,payVO,finalMoney,response,memberVO);
+		
+		return mav;
+	}
+	
+	//AddPoint2
+	@RequestMapping(value = "/AddPoint2", method = RequestMethod.POST)
+	public ModelAndView AddPoint2(@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId){
+	
+		mav = new ModelAndView();
+		
+		mav = ps.AddPoint2(finalMoney,roomId);
+		
+		return mav;
+	}
+	
+	//payCancel2
+	@RequestMapping(value = "/payCancel2", method = RequestMethod.GET)
+	public ModelAndView payCancel2(HttpSession session, @ModelAttribute PayVO payVO) {
+		mav = new ModelAndView();
+		mav = ps.payCancel2(session,payVO);
+		return mav;
+	}
+	
+	//RoomOut2
+	@RequestMapping(value = "/RoomOut2", method = RequestMethod.GET)
+	public ModelAndView RoomOut2(@ModelAttribute RoomVO roomVO,HttpSession session, HttpServletResponse response) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = crs.RoomOut2(roomVO, session,response);
+		
+		return mav;
+	}
+	
+	//예약룸 리스트 불러오기
+	@RequestMapping(value = "/RoomList2", method = RequestMethod.GET)
+	public ModelAndView RoomList2() {
+		mav = new ModelAndView();
+		
+		mav = crs.RoomList2();
+		
+		return mav;
+		
+	}
+	
+    //AddPointPro2
+	@RequestMapping(value = "/AddPointPro2", method = RequestMethod.POST)
+	public ModelAndView AddPointPro2(@RequestParam("Point") String Point,HttpSession session,@RequestParam("finalMoney") String finalMoney,@RequestParam("roomId") String roomId)  {
+		mav = new ModelAndView();
+		//System.out.println(Point);
+		mav = ps.AddPointPro2(Point,session,roomId,finalMoney);
+		
+		return mav;
+	}
+	
+	//예약방 세부정보 
+	@RequestMapping(value = "/RoomInfo2", method = RequestMethod.GET)
+	public ModelAndView RoomInfo2(@ModelAttribute RoomVO roomVO, HttpSession session,HttpServletResponse response,PayVO payVO) throws IOException {
+		mav = new ModelAndView();
+		mav = crs.RoomInfo2(roomVO, session,response,payVO);
+		
+		return mav;
+		
+	}
+	//EndDriver
+	@RequestMapping(value = "/EndDriver", method = RequestMethod.GET)
+	public ModelAndView EndDriver(@ModelAttribute RoomVO roomVO,HttpSession session, HttpServletResponse response, PayVO payVO, endRoomVO endRoom) throws IOException {
+		mav = new ModelAndView();
+		
+		mav = crs.EndDriver(roomVO, session,response,payVO,endRoom);
+		
+		return mav;
+	}
+	
+	
 }
