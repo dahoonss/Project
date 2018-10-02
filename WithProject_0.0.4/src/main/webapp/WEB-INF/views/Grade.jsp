@@ -20,16 +20,15 @@
 
 		</select><br> <input type="submit" value="평점주기"><br>
 	</form>
+	
 	<table>
 
 			<tr>
 				<td>평점</td>
 				<td>${gogo.finalgrade}</td>
-				<td></td>
 			</tr>
 
 		</table>
-	
 
 </body>
 </html>

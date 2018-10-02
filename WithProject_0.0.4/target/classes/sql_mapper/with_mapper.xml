@@ -259,4 +259,28 @@ insert into pay values(#{roomId},#{id},2)
 insert into ENDROOM values(#{eroomId},#{erStart},#{erEnd},#{epreTime},#{epreDistance},#{epreMoney},#{eopGender},#{erId1},#{erId2},#{erId3},#{erId4},#{edayDay},#{etimes},#{emaximum},#{edriverId},#{efinalMoney})
 </insert>
 
+
+<!--MyPageList  
+<select id="mypageList" parameterType="room" resultType="room">
+select * from Endroom where roomId=#{roomId}
+</select>-->
+
+<!-- PayRoomId -->
+<select id="PayRoomId" parameterType="room" resultType="String">
+select ROOMID from pay where id=#{id}
+</select>
+
+<!-- Endroomd -->
+<!-- <select id="Endroomd" parameterType="endRoom" resultType="endRoom">
+select * from EndRoom where eroomId=#{eroomId}
+</select>
+ -->
+
+<!-- EndRoomSelect -->
+<select id="EndRoomSelect" parameterType="endRoom" resultType="endRoom">
+select * from ENDROOM where EROOMID=#{eRoomid}
+</select>
+
+
+
 </mapper>

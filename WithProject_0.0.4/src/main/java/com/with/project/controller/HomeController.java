@@ -3,6 +3,7 @@ package com.with.project.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.service.CreateRoomService;
+import com.with.project.service.GradeService;
 import com.with.project.service.MemberService;
+import com.with.project.service.MyPageService;
 import com.with.project.service.PayService;
 import com.with.project.vo.MemberVO;
 import com.with.project.vo.PayVO;
@@ -40,6 +43,14 @@ public class HomeController {
 	@Autowired
 	private HttpSession session;
 
+	@Autowired
+	private MyPageService mps;
+	
+	@Autowired
+	private GradeService gsv;
+	
+	
+	
 	// 서버 실행 시켰을때
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -473,6 +484,41 @@ public class HomeController {
 		
 		return mav;
 	}
+	
+	//자신이 이용한 목록보기 페이지 이동
+/*		@RequestMapping(value = "/MyPageList", method = RequestMethod.GET)
+		public String MyPageList() {
+			return "MyPageList";
+
+		}*/
+		
+	//자신이 이용한 목록보기
+	@RequestMapping(value = "/MyPageList", method = RequestMethod.GET)
+	public ModelAndView MyPageList(HttpSession session,endRoomVO endRoom) {
+		mav = new ModelAndView();
+		
+		mav=mps.mypageList(session,endRoom);
+		
+		return mav;
+	}
+	//평점주기
+	@RequestMapping(value = "/Gradeform", method = RequestMethod.POST)
+	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session,@RequestParam("edirver")String edirver)  {
+		mav = new ModelAndView();
+		
+	
+		
+		System.out.println(Grade);
+	
+		mav = gsv.AddGrade(Grade,session,edirver);
+		
+		return mav;
+	}
+	
+	
+	
+	
+	
 	
 	
 }
