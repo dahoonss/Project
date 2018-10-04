@@ -281,6 +281,33 @@ select * from EndRoom where eroomId=#{eroomId}
 select * from ENDROOM where EROOMID=#{eRoomid}
 </select>
 
+<!--SelectDriverInfo  -->
+<select id="SelectDriverInfo" parameterType="member" resultType="member">
+select * from member where ID=#{Id}
+</select>
+
+<!-- selectdriver  
+<select id="selectdriver" parameterType="endRoom" resultType="endRoom">
+select * from endRoom where edriverId=#{edriverId}
+</select> -->
+
+
+<!-- UpdateDriverInfo -->
+<update id="UpdateDriverInfo" parameterType="member">
+update member set grade=#{Grade},gradeCount=#{GradeCount},finalgrade=#{Finalgrade} where ID = #{Id}
+</update>
+
+
+<!--PayList2  -->
+<select id="PayList2" parameterType="room" resultType="String">
+select ROOMID from pay where id=#{id}
+</select>
+
+<!-- rservationRoomList  -->
+<select id="rservationRoomList" parameterType="endRoom" resultType="endRoom">
+select * from ENDROOM where EROOMID=#{eRoomid}
+</select>
+
 
 
 </mapper>

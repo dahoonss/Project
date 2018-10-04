@@ -23,14 +23,8 @@ public class MyPageDAO {
 	}
 
 
-	public List<endRoomVO> Endroomd(int mylist) {
-	
-		return sqlSession.selectList("With.Endroomd",mylist);
-	}
-
 	//endRoomVo
 	public endRoomVO EndRoomSelect(int eRoomid) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("With.EndRoomSelect", eRoomid);
 	}
 

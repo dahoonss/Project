@@ -73,7 +73,7 @@ public class GradeService {
 		double sum = Driver.getGrade();
 		double count = Driver.getGradeCount();
 		double ffinal = Driver.getFinalgrade();
-		double ffinal2 = Double.parseDouble(String.format("%.1f", ffinal));
+		
 		
 		
 	
@@ -99,12 +99,12 @@ public class GradeService {
 		/*double ble =Double.parseDouble(String.format("%.1f", ffinal));*/
 		sum = sum+Integer.parseInt(grade);
 		count+=1;
-		ffinal2 = sum/count;
+		ffinal = sum/count;
 		
 		Driver.setId(DriverId);
 		Driver.setGrade(sum);
 		Driver.setGradeCount(count);
-		Driver.setFinalgrade(ffinal2);
+		Driver.setFinalgrade(ffinal);
 		
 		gradeDAO.UpdateDriverInfo(Driver);
 		mav.addObject("gogo",Driver);

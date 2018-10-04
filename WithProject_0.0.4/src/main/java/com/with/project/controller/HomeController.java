@@ -22,6 +22,7 @@ import com.with.project.service.GradeService;
 import com.with.project.service.MemberService;
 import com.with.project.service.MyPageService;
 import com.with.project.service.PayService;
+import com.with.project.service.ReservationService;
 import com.with.project.vo.MemberVO;
 import com.with.project.vo.PayVO;
 import com.with.project.vo.RoomVO;
@@ -48,6 +49,9 @@ public class HomeController {
 	
 	@Autowired
 	private GradeService gsv;
+	
+	@Autowired
+	private ReservationService rvs;
 	
 	
 	
@@ -501,23 +505,38 @@ public class HomeController {
 		
 		return mav;
 	}
+	
+	//평점페이지
+	@RequestMapping(value = "/Grade", method = RequestMethod.GET)
+	public ModelAndView Grade(@RequestParam("driverId") String driverId) {
+		mav = new ModelAndView();
+		System.out.println(driverId);
+		mav.addObject("driverId",driverId);
+		mav.setViewName("Grade");
+		return mav;
+	}
 	//평점주기
-	@RequestMapping(value = "/Gradeform", method = RequestMethod.POST)
-	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session,@RequestParam("edirver")String edirver)  {
+	@RequestMapping(value = "/Gradeform", method = RequestMethod.GET)
+	public ModelAndView Gradeform(@RequestParam("Grade") String Grade,HttpSession session,@RequestParam("edriverId")String edriverId)  {
 		mav = new ModelAndView();
 		
-	
-		
-		System.out.println(Grade);
-	
-		mav = gsv.AddGrade(Grade,session,edirver);
+		System.out.println("평점: "+Grade);
+		System.out.println("드라이버 아뒤 "+edriverId);
+		mav = gsv.AddGrade(Grade,session,edriverId);
 		
 		return mav;
 	}
 	
 	
+	//내가 예약한거 보기
+	@RequestMapping(value = "/ReservationRoomList2", method = RequestMethod.GET)
+	public ModelAndView ReservationRoomList2(HttpSession session,endRoomVO endRoom) {
+	mav = new ModelAndView();
 	
-	
+		mav=rvs.rservationRoomList(session,endRoom);
+		
+		return mav;
+	}
 	
 	
 	

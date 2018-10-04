@@ -21,7 +21,7 @@ ${mypagelist.eroomId }번방
 시간:${mypagelist.epreTime}
 거리:${mypagelist.epreDistance}
 금액:${mypagelist.epreMoney}
-<a href="Grade?=${mypagelist.edriverId}">${mypagelist.edriverId}:기사님 평점 주기</a><br>
+<a href="Grade?driverId=${mypagelist.edriverId}">${mypagelist.edriverId}:기사님 평점 주기</a><br>
 
 </c:forEach>
 

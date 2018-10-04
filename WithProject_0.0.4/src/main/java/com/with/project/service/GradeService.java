@@ -18,7 +18,7 @@ public class GradeService {
 	private GradeDAO gradeDAO;
 	private ModelAndView mav;
 	
-	public ModelAndView AddGrade(String grade, HttpSession session,String edirver) {
+	public ModelAndView AddGrade(String grade, HttpSession session,String edriverId) {
 	
 		mav = new ModelAndView();
 		
@@ -31,22 +31,19 @@ public class GradeService {
 		double sum = Grade.getGrade();
 		double count = Grade.getGradeCount();
 		double ffinal = Grade.getFinalgrade();
-		double ffinal2 = Double.parseDouble(String.format("%.1f", ffinal));
-		
-		
-		//평점받는 기사
-		gradeDAO.selectdriver(edirver);
-		
+		/*double ffinal2 = Double.parseDouble(String.format("%.1f", ffinal));*/
+	
+		//계산
 		sum = sum+Integer.parseInt(grade);
 		count+=1;
-		ffinal2 = sum/count;
-		
-		
+		ffinal = sum/count;
+		//값 저장    드라이버 아뒤를....
+		Grade.setId(edriverId);
 		Grade.setGrade(sum);
 		Grade.setGradeCount(count);
-		Grade.setFinalgrade(ffinal2);
-		
-		//해당 기사 받은평점 업데이트
+		Grade.setFinalgrade(ffinal);
+		//평점 업데이트
+		System.out.println("드라이버 아뒤 "+edriverId);
 		gradeDAO.UpdateDriverInfo(Grade);
 		mav.addObject("gogo",Grade);
 		mav.setViewName("Grade");
