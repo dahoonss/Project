@@ -11,9 +11,9 @@
 <h2>자신이 이용한 기록보기</h2>
 
 
-<form action="mypagelist" method="post">
+<form action="mypagelist?=${Id}" method="post">
 
-<c:forEach var="mypagelist" items="${mypagelist }">
+<c:forEach var="mypagelist" items="${mypagelist}">
 
 ${mypagelist.eroomId }번방
 출발점:${mypagelist.erStart}

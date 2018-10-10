@@ -28,4 +28,9 @@ public class MyPageDAO {
 		return sqlSession.selectOne("With.EndRoomSelect", eRoomid);
 	}
 
+
+	public List<endRoomVO> EndrId(String id) {
+		return sqlSession.selectList("With.EndrId", id);
+	}
+
 }

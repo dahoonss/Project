@@ -10,8 +10,9 @@
 <body>
 <h2>내가 예약한거 보기</h2>
 
-<form action="reservationList2" method="get">
+<form action=ReservationRoomList method="get">
 <c:forEach var="reservationList" items="${reservationList}">
+
 ${reservationList.eroomId }번방
 출발점:${reservationList.erStart}
 도착점:${reservationList.erEnd}
@@ -23,5 +24,6 @@ ${reservationList.eroomId }번방
 
 </c:forEach>
 </form>
+
 </body>
 </html>

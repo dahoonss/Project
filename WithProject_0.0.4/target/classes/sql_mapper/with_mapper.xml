@@ -303,11 +303,31 @@ update member set grade=#{Grade},gradeCount=#{GradeCount},finalgrade=#{Finalgrad
 select ROOMID from pay where id=#{id}
 </select>
 
-<!-- rservationRoomList  -->
+<!--  rservationRoomList   -->
 <select id="rservationRoomList" parameterType="endRoom" resultType="endRoom">
 select * from ENDROOM where EROOMID=#{eRoomid}
 </select>
 
+<!--DriverExpected  -->
+<select id="DriverExpected" parameterType="room" resultType="room">
+select * from room where driverId=#{driverId}
+</select>
+
+<!--drivingrecord  -->
+<select id="drivingrecord" parameterType="endRoom" resultType="endRoom">
+select * from ENDROOM where edriverId=#{edriverId}
+</select>
+
+<!--EndrId  -->
+<select id="EndrId" parameterType="String" resultType="endRoom">
+select * from ENDROOM where erId1=#{id} or erId2=#{id} or erId3=#{id} or erId4=#{id}
+
+</select>
+
+<!--endroomid  -->
+<select id="endroomid" parameterType="String" resultType="endRoom"> 
+select * from room where rId1=#{id} or rId2=#{id} or rId3=#{id} or rId4=#{id}
+</select>
 
 
 </mapper>

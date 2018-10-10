@@ -15,11 +15,15 @@ public class ReservationDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	public List<String> PayList2(String id) {
-		return sqlSession.selectList("With.PayList", id);
+		return sqlSession.selectList("With.PayList2", id);
 	}
 
 	public endRoomVO rservationRoomList(int roomid) {
 		return sqlSession.selectOne("With.rservationRoomList", roomid);
+	}
+
+	public List<endRoomVO> endroomid(String id) {
+		return sqlSession.selectList("With.endroomid", id);
 	}
 
 }

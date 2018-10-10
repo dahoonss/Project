@@ -1,8 +1,11 @@
 package com.with.project.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.dao.MyPageDAO;
+import com.with.project.vo.MemberVO;
 import com.with.project.vo.RoomVO;
 import com.with.project.vo.endRoomVO;
 
@@ -25,46 +29,70 @@ public class MyPageService {
 	
 
 	
-	public ModelAndView mypageList(HttpSession session,endRoomVO endRoom) {
+	public ModelAndView mypageList(HttpSession session,endRoomVO endRoom,HttpServletResponse response,MemberVO memvervo) throws IOException{
 		mav = new ModelAndView();
-	
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
 		String id = (String)session.getAttribute("id");
-
-		//해당 아이디 결제된 룸 번호를 찾음
-		List<String> roomid = mpDAO.PayRoomId(id);
 		ArrayList<endRoomVO> list = new ArrayList<endRoomVO>();
+		System.out.println("여기까지는 오니?");
+		//해당 아이디 결제된 룸 번호를 찾음
 		
-		for(int i=0; i<roomid.size(); i++) {
-			
-			int roomIdReal = Integer.parseInt(roomid.get(i));
-			
-			
-			endRoomVO endRoom1 = mpDAO.EndRoomSelect(roomIdReal);
-			
-			System.out.println(endRoom1.getEfinalMoney());
-			list.add(i, endRoom1);
-			
-			
-		//	System.out.println("리스트값 찍어보기"+list.get(i));
+		//쿼리문을 넘겨서 가져와
 		
-				}
-		System.out.println("3");
-		System.out.println("왜안되고 지랄이야 ㅅㅂ러마");
-		System.out.println("리스트값 찍어보기"+list.get(0));
-		System.out.println("리스트값 찍어보기"+list.get(1));
-		
-		
-	
-		
-		
-		/*for(int i=0;i<mypage.size();i++) {
-			System.out.println(i+"번째:"+mypage.get(i));	
+		List<endRoomVO> endrid=mpDAO.EndrId(id);
+		System.out.println(endrid);
+		if(endrid.size() == 0) {
+			System.out.println("endId"+endrid);
+			out.println("<script>");
+			out.println("alert('이용한 기록이 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
 		}
 		
-		System.out.println(mypage);*/
+		/*if(endrid.get(0).getEdriverId() == null) {
+			System.out.println("endId"+endrid);
+			out.println("<script>");
+			out.println("alert('이용한 기록이 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}*/else {
+			List<String> roomid = mpDAO.PayRoomId(id);
+			for(int i=0; i<roomid.size(); i++) {
+				int roomIdReal = Integer.parseInt(roomid.get(i));
+				endRoomVO endRoom1 = mpDAO.EndRoomSelect(roomIdReal);
+				System.out.println(endRoom1.getEfinalMoney());
+				list.add(i, endRoom1);
+		}
+		}
+		//여기서
+		
+		/*if(id==memvervo.getId()) {
+		List<String> roomid = mpDAO.PayRoomId(id);
+		for(int i=0; i<roomid.size(); i++) {
+			int roomIdReal = Integer.parseInt(roomid.get(i));
+			endRoomVO endRoom1 = mpDAO.EndRoomSelect(roomIdReal);
+			System.out.println(endRoom1.getEfinalMoney());
+			list.add(i, endRoom1);
+				}
+		}else {
+			out.println("<script>");
+			out.println("alert('이용한 기록이 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}*/
+		
+		System.out.println("여이가 그 서비스라는 곳이니?");
+		System.out.println("리스트: "+list);
+		System.out.println("리스트"+list.get(0));
+		System.out.println("리스트"+list.get(1));
+		System.out.println("리스트"+list.get(2));
 		
 		mav.addObject("mypagelist",list);
-		
 		mav.setViewName("MyPageList");
 		
 		

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.project.service.CreateRoomService;
+import com.with.project.service.DriverExpected;
+import com.with.project.service.DrivingrecordService;
 import com.with.project.service.GradeService;
 import com.with.project.service.MemberService;
 import com.with.project.service.MyPageService;
@@ -53,7 +55,11 @@ public class HomeController {
 	@Autowired
 	private ReservationService rvs;
 	
+	@Autowired
+	private DriverExpected des;
 	
+	@Autowired
+	private DrivingrecordService drs;
 	
 	// 서버 실행 시켰을때
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -397,7 +403,7 @@ public class HomeController {
 		mav = new ModelAndView();
 		mav = ps.payCancel(session,payVO);
 		return mav;
-	}
+	} 
 	
 	//예약 및 결제 Rpay
 	@RequestMapping(value = "/Rpay", method = RequestMethod.GET)
@@ -496,12 +502,18 @@ public class HomeController {
 
 		}*/
 		
-	//자신이 이용한 목록보기
+	//자신이 이용한 목록보기 
 	@RequestMapping(value = "/MyPageList", method = RequestMethod.GET)
-	public ModelAndView MyPageList(HttpSession session,endRoomVO endRoom) {
+	public ModelAndView MyPageList(HttpSession session,endRoomVO endRoom,HttpServletResponse response,MemberVO memvervo)throws IOException {
 		mav = new ModelAndView();
 		
-		mav=mps.mypageList(session,endRoom);
+		System.out.println("여기야 여기!!!");
+		
+		String id = (String)session.getAttribute("id");
+		memvervo.setId(id);
+		System.out.println("아디: "+memvervo.getId());
+		System.out.println(memvervo.getId());
+		mav=mps.mypageList(session,endRoom,response,memvervo);
 		
 		return mav;
 	}
@@ -510,6 +522,7 @@ public class HomeController {
 	@RequestMapping(value = "/Grade", method = RequestMethod.GET)
 	public ModelAndView Grade(@RequestParam("driverId") String driverId) {
 		mav = new ModelAndView();
+	
 		System.out.println(driverId);
 		mav.addObject("driverId",driverId);
 		mav.setViewName("Grade");
@@ -527,17 +540,73 @@ public class HomeController {
 		return mav;
 	}
 	
+
+	/*//내가 예약한거 보기 페이지
+		@RequestMapping(value = "/ReservationRoomList", method = RequestMethod.GET)
+		public String ReservationRoomList() {
+			return "ReservationRoomList";
+		}*/
+	
 	
 	//내가 예약한거 보기
-	@RequestMapping(value = "/ReservationRoomList2", method = RequestMethod.GET)
-	public ModelAndView ReservationRoomList2(HttpSession session,endRoomVO endRoom) {
+	@RequestMapping(value = "/ReservationRoomList", method = RequestMethod.GET)
+	public ModelAndView ReservationRoomList(HttpSession session,endRoomVO endRoom,HttpServletResponse response,MemberVO memvervo)throws IOException  {
 	mav = new ModelAndView();
 	
-		mav=rvs.rservationRoomList(session,endRoom);
-		
+	System.out.println("홈컨: "+ endRoom+"홈컨1");
+	String id = (String)session.getAttribute("id");
+	
+	memvervo.setId(id);
+		mav=rvs.rservationRoomList(session,endRoom,response,memvervo);
+		System.out.println("홈컨: "+ endRoom+"홈컨2");
 		return mav;
 	}
+	/*//기사 운행예정 페이지 이동
+	@RequestMapping(value = "/DriverExpected", method = RequestMethod.GET)
+	public String DriverExpected() {
 	
-	
+	return "DriverExpected";
+
+	}*/
+	//기사 운행예정 
+		@RequestMapping(value = "/DriverExpected", method = RequestMethod.GET)
+		public ModelAndView DriverExpected(HttpSession session,RoomVO roomvo,HttpServletResponse response) throws IOException {
+		mav = new ModelAndView();
+		System.out.println("기사 마이페이지 Home");
+		System.out.println(roomvo.getDriverId());
+		String id = (String)session.getAttribute("id");
+		roomvo.setDriverId(id);
+		mav = des.DriverExpected2(session,roomvo,response);
+		return mav;
+		}
+		
+	//기사 운행기록
+		@RequestMapping(value = "/Drivingrecord", method = RequestMethod.GET)
+		public ModelAndView Drivingrecord(HttpSession session,endRoomVO endRoomVO,HttpServletResponse response) throws IOException {
+		mav = new ModelAndView();
+			
+			System.out.println("기사운행기록 홈컨1");
+			
+			//세션아디, 끝난 운행 
+			String id=(String)session.getAttribute("id");
+			endRoomVO.setEdriverId(id);
+			mav=drs.drivingrecord(session,endRoomVO,response);
+			
+			System.out.println("기록운행기록 홈컨2");
+			return mav;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 }
