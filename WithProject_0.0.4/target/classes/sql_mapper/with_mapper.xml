@@ -325,7 +325,7 @@ select * from ENDROOM where erId1=#{id} or erId2=#{id} or erId3=#{id} or erId4=#
 </select>
 
 <!--endroomid  -->
-<select id="endroomid" parameterType="String" resultType="endRoom"> 
+<select id="endroomid" parameterType="String" resultType="Room"> 
 select * from room where rId1=#{id} or rId2=#{id} or rId3=#{id} or rId4=#{id}
 </select>
 

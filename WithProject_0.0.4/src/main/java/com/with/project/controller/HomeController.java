@@ -573,9 +573,10 @@ public class HomeController {
 		public ModelAndView DriverExpected(HttpSession session,RoomVO roomvo,HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
 		System.out.println("기사 마이페이지 Home");
-		System.out.println(roomvo.getDriverId());
+	
 		String id = (String)session.getAttribute("id");
 		roomvo.setDriverId(id);
+		System.out.println(roomvo.getDriverId());
 		mav = des.DriverExpected2(session,roomvo,response);
 		return mav;
 		}
