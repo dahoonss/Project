@@ -19,5 +19,4 @@ public class DriverExpectedDAO {
 		return sqlSession.selectList("With.DriverExpected", roomvo);
 	}
 
-	
 }

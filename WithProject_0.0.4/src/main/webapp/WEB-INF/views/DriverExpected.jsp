@@ -9,13 +9,10 @@
 </head>
 <body>
 <h2>기사 운행예정</h2>
-
+<%-- 
 <form action="DriverExpected?=${driverId}"  method="get">
+ --%>
 
-
-<!-- forEach 리스트를 뽑아낼때 사용하는 
-	
- -->
 <c:forEach var="roomlist" items="${roomlist}">
 
 ${roomlist.roomId}번방
@@ -42,7 +39,7 @@ ${roomlist.roomId}번방
 
 <br>
 </c:forEach>
- </form>
+<!--  </form> -->
  
  
  
